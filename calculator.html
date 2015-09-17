@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>React JS - Calculator</title>
+    <meta name="description" content="">
+    <style>
+        html {
+            background: #efefef;
+            margin-top: 3em;
+        }
+        body {
+            margin: 0 auto;
+            width: 500px;
+        }
+        input {
+            border: none;
+            border-radius: 5px;
+            font-size: 3em;
+            margin-bottom: 1em;
+            outline: none;
+            padding: 5%;
+            text-align: right;
+            width: 90%;
+        }
+        button {
+            background-color: #fff;
+            border: 1px solid #efefef;
+            border-radius: 50%;
+            font-size: 2.5em;
+            height: 3em;
+            outline: none;
+            width: 25%;
+        }
+        button:hover {
+            background: #f8f8f8;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://fb.me/react-0.13.3.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+</head>
+<body>
+    <div id ="calc"></div>
+
+    <script type="text/jsx">
+        var Calculator = React.createClass({
+            calculate: function() {
+                this.setState({
+                    display: eval(this.state.display)
+                })
+            },
+
+            getInitialState: function() {
+                return {
+                    buttons: [9, 8, 7, "%", 6, 5, 4, "*", 3, 2, 1, "-", 0, , "C", "=", "+"],
+                    display: 0
+                };
+            },
+
+            handleClick: function(event) {
+                var e = event.target.value;
+
+                if (e == "C") {
+                    this.reset();
+                }
+                else if (e == "=") {
+                    this.calculate();
+                }
+                else {
+                    this.setState({
+                        display: this.state.display + event.target.value
+                    });
+                }
+            },
+
+            render: function() {
+                var buttons = this.state.buttons.map(function(value){
+                    return (
+                        <button onClick={this.handleClick} value={value}>{value}</button>
+                    )
+                }.bind(this));
+
+                return (
+                    <div>
+                        <input readOnly type="text" value={this.state.display} />
+                        <div id="container-keyboard">{buttons}</div>
+                    </div>
+                )
+            },
+
+            reset: function() {
+                this.setState({
+                    display: 0
+                });
+            }
+        });
+
+        React.render(<Calculator />, document.getElementById('calc'));
+    </script>
+</body>
+</html>
