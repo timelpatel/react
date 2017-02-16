@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import items from './reducers/items.js'
-import VisibleTodoList from './containers/VisibleTodoList'
 import Item from './item.jsx'
 
 const List = ({ items }) => (
@@ -20,8 +19,8 @@ List.propTypes = {
         id: PropTypes.number.isRequired,
         completed: PropTypes.bool.isRequired,
         text: PropTypes.string.isRequired
-    }).isRequired).isRequired//,
-    //onTodoClick: PropTypes.func.isRequired
+    }).isRequired).isRequired,
+    onTodoClick: PropTypes.func.isRequired
 }
 
 export default List;

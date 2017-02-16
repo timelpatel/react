@@ -63,11 +63,11 @@
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _NewItem = __webpack_require__(/*! ./containers/NewItem.js */ 226);
+	var _AddTodo = __webpack_require__(/*! ./containers/AddTodo.js */ 222);
 	
-	var _NewItem2 = _interopRequireDefault(_NewItem);
+	var _AddTodo2 = _interopRequireDefault(_AddTodo);
 	
-	var _VisibleTodoList = __webpack_require__(/*! ./containers/VisibleTodoList */ 222);
+	var _VisibleTodoList = __webpack_require__(/*! ./containers/VisibleTodoList */ 224);
 	
 	var _VisibleTodoList2 = _interopRequireDefault(_VisibleTodoList);
 	
@@ -84,7 +84,7 @@
 	            null,
 	            'Todo List'
 	        ),
-	        _react2.default.createElement(_NewItem2.default, null),
+	        _react2.default.createElement(_AddTodo2.default, null),
 	        _react2.default.createElement(_VisibleTodoList2.default, null)
 	    );
 	};
@@ -24704,7 +24704,6 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	  var action = arguments[1];
 	
-	  console.log(action);
 	  switch (action.type) {
 	    case 'ADD_TODO':
 	      return [].concat(_toConsumableArray(state), [item(undefined, action)]);
@@ -24721,6 +24720,101 @@
 
 /***/ },
 /* 222 */
+/*!**********************************************!*\
+  !*** ./src/client/app/containers/AddTodo.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 172);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 223);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var AddTodo = function AddTodo(_ref) {
+	    var dispatch = _ref.dispatch;
+	
+	    var input = void 0;
+	
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'form',
+	            { onSubmit: function onSubmit(e) {
+	                    e.preventDefault();
+	
+	                    if (!input.value.trim()) {
+	                        return;
+	                    }
+	
+	                    dispatch((0, _actions.addTodo)(input.value));
+	                    input.value = '';
+	                } },
+	            _react2.default.createElement('input', {
+	                type: 'text',
+	                ref: function ref(node) {
+	                    input = node;
+	                } }),
+	            _react2.default.createElement(
+	                'button',
+	                { type: 'submit' },
+	                'Add'
+	            )
+	        )
+	    );
+	};
+	AddTodo = (0, _reactRedux.connect)()(AddTodo);
+	
+	exports.default = AddTodo;
+
+/***/ },
+/* 223 */
+/*!*****************************************!*\
+  !*** ./src/client/app/actions/index.js ***!
+  \*****************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var nextItemId = 0;
+	var addTodo = exports.addTodo = function addTodo(text) {
+	  return {
+	    type: 'ADD_TODO',
+	    id: nextItemId++,
+	    text: text
+	  };
+	};
+	
+	var setVisibilityFilter = exports.setVisibilityFilter = function setVisibilityFilter(filter) {
+	  return {
+	    type: 'SET_VISIBILITY_FILTER',
+	    filter: filter
+	  };
+	};
+	
+	var toggleTodo = exports.toggleTodo = function toggleTodo(id) {
+	  return {
+	    type: 'TOGGLE_TODO',
+	    id: id
+	  };
+	};
+
+/***/ },
+/* 224 */
 /*!******************************************************!*\
   !*** ./src/client/app/containers/VisibleTodoList.js ***!
   \******************************************************/
@@ -24736,7 +24830,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 223);
 	
-	var _list = __webpack_require__(/*! ../list.jsx */ 224);
+	var _list = __webpack_require__(/*! ../list.jsx */ 225);
 	
 	var _list2 = _interopRequireDefault(_list);
 	
@@ -24778,42 +24872,7 @@
 	exports.default = VisibleTodoList;
 
 /***/ },
-/* 223 */
-/*!*****************************************!*\
-  !*** ./src/client/app/actions/index.js ***!
-  \*****************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var nextItemId = 0;
-	var addTodo = exports.addTodo = function addTodo(text) {
-	  return {
-	    type: 'ADD_TODO',
-	    id: nextItemId++,
-	    text: text
-	  };
-	};
-	
-	var setVisibilityFilter = exports.setVisibilityFilter = function setVisibilityFilter(filter) {
-	  return {
-	    type: 'SET_VISIBILITY_FILTER',
-	    filter: filter
-	  };
-	};
-	
-	var toggleTodo = exports.toggleTodo = function toggleTodo(id) {
-	  return {
-	    type: 'TOGGLE_TODO',
-	    id: id
-	  };
-	};
-
-/***/ },
-/* 224 */
+/* 225 */
 /*!*********************************!*\
   !*** ./src/client/app/list.jsx ***!
   \*********************************/
@@ -24835,11 +24894,7 @@
 	
 	var _items2 = _interopRequireDefault(_items);
 	
-	var _VisibleTodoList = __webpack_require__(/*! ./containers/VisibleTodoList */ 222);
-	
-	var _VisibleTodoList2 = _interopRequireDefault(_VisibleTodoList);
-	
-	var _item = __webpack_require__(/*! ./item.jsx */ 225);
+	var _item = __webpack_require__(/*! ./item.jsx */ 226);
 	
 	var _item2 = _interopRequireDefault(_item);
 	
@@ -24867,14 +24922,14 @@
 	        id: _react.PropTypes.number.isRequired,
 	        completed: _react.PropTypes.bool.isRequired,
 	        text: _react.PropTypes.string.isRequired
-	    }).isRequired).isRequired //,
-	    //onTodoClick: PropTypes.func.isRequired
+	    }).isRequired).isRequired,
+	    onTodoClick: _react.PropTypes.func.isRequired
 	};
 	
 	exports.default = List;
 
 /***/ },
-/* 225 */
+/* 226 */
 /*!*********************************!*\
   !*** ./src/client/app/item.jsx ***!
   \*********************************/
@@ -24909,122 +24964,6 @@
 	};
 	
 	exports.default = Item;
-
-/***/ },
-/* 226 */
-/*!**********************************************!*\
-  !*** ./src/client/app/containers/NewItem.js ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 172);
-	
-	var _newItem = __webpack_require__(/*! ../new-item.jsx */ 227);
-	
-	var _newItem2 = _interopRequireDefault(_newItem);
-	
-	var _actions = __webpack_require__(/*! ../actions */ 223);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = (0, _reactRedux.connect)(function () {
-	    return {};
-	}, function (dispatch) {
-	    return {
-	        onClick: function onClick(text) {
-	            return dispatch((0, _actions.addTodo)(text));
-	        }
-	    };
-	})(_newItem2.default);
-
-/***/ },
-/* 227 */
-/*!*************************************!*\
-  !*** ./src/client/app/new-item.jsx ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var NewItem = function (_React$Component) {
-	    _inherits(NewItem, _React$Component);
-	
-	    function NewItem(props) {
-	        _classCallCheck(this, NewItem);
-	
-	        var _this = _possibleConstructorReturn(this, (NewItem.__proto__ || Object.getPrototypeOf(NewItem)).call(this, props));
-	
-	        _this.state = {
-	            inputValue: ''
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(NewItem, [{
-	        key: 'addItem',
-	        value: function addItem() {
-	            if (this.props.onClick) {
-	                this.props.onClick(this.state.inputValue);
-	            }
-	        }
-	    }, {
-	        key: 'handleChange',
-	        value: function handleChange(e) {
-	            this.setState({ inputValue: e.target.value });
-	        }
-	    }, {
-	        key: 'handleClick',
-	        value: function handleClick(e) {
-	            this.addItem();
-	            // clear input field
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement('input', {
-	                    onBlur: this.handleChange.bind(this),
-	                    type: 'text'
-	                }),
-	                _react2.default.createElement('input', {
-	                    onClick: this.handleClick.bind(this),
-	                    type: 'submit',
-	                    value: 'Add'
-	                })
-	            );
-	        }
-	    }]);
-	
-	    return NewItem;
-	}(_react2.default.Component);
-	
-	exports.default = NewItem;
 
 /***/ }
 /******/ ]);
