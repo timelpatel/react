@@ -24901,7 +24901,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var List = function List(_ref) {
-	    var items = _ref.items;
+	    var items = _ref.items,
+	        onTodoClick = _ref.onTodoClick;
 	    return _react2.default.createElement(
 	        'ul',
 	        null,
@@ -24935,7 +24936,7 @@
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -24948,18 +24949,25 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Item = function Item(_ref) {
-	    var text = _ref.text;
+	    var onClick = _ref.onClick,
+	        completed = _ref.completed,
+	        text = _ref.text;
 	    return _react2.default.createElement(
-	        "li",
-	        null,
-	        _react2.default.createElement("input", { type: "checkbox" }),
+	        'li',
+	        {
+	            onClick: onClick,
+	            style: {
+	                textDecoration: completed ? 'line-through' : 'none'
+	            }
+	        },
+	        _react2.default.createElement('input', { type: 'checkbox' }),
 	        text
 	    );
 	};
 	
 	Item.propTypes = {
-	    // onClick: PropTypes.func.isRequired,
-	    // completed: PropTypes.bool.isRequired,
+	    onClick: _react.PropTypes.func.isRequired,
+	    completed: _react.PropTypes.bool.isRequired,
 	    text: _react.PropTypes.string.isRequired
 	};
 	

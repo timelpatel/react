@@ -1,8 +1,13 @@
 import React, { PropTypes } from 'react'
 
-const Item = ({ text }) => (
+const Item = ({ onClick, completed, text }) => (
 
-    <li>
+    <li
+        onClick={onClick}
+        style={{
+            textDecoration: completed ? 'line-through' : 'none'
+        }}
+    >
         <input type="checkbox" />
         {text}
     </li>
@@ -10,8 +15,8 @@ const Item = ({ text }) => (
 )
 
 Item.propTypes = {
-  // onClick: PropTypes.func.isRequired,
-  // completed: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
 }
 
